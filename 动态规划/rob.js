@@ -16,7 +16,7 @@
   n 个数为 1 ， f(1) = A1
   n 个数为 2 ， f(2) = Math.max(A1, A2)
   n 个数为 3 ， f(3) = Math.max(f(1) + A3 , f(2))
-  f(k) = Math.max(f(k - 2) + Ak, f(k - 1))
+  f(k) = Math.max(f(k - 2) + Ak, f(k - 1)) 
 */
 function rob (nums) {
   let len = nums.length
