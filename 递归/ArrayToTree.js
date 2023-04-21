@@ -60,9 +60,12 @@ const toTree = (arr) => {
   用 Map 存储借助对象引用
   1. 构造 Map 存储数据，初始化 children 为空数组
   2. 循环 arr，如果 item.pid 为 0，推入 result 作为起始数组
-  3. itemMap[pid] 为 Map 中的父级引用，itemMap[id] 为子级引用
-  4. 父级引用的 children 推入子级引用。 itemMap[pid].children 推入 itemMap[id]
-  5. 边界条件：如果 itemMap[pid] 不存在，Map 新增 itemMap[pid] 及 初始化 children 为空数组
+
+  3.result 中存储了 对象引用， 接下来只对 itemMap 操作
+
+  4. itemMap[pid] 为 Map 中的父级引用，itemMap[id] 为子级引用
+  5. 父级引用的 children 推入子级引用。 itemMap[pid].children 推入 itemMap[id]
+  6. 边界条件：如果 itemMap[pid] 不存在，Map 新增 itemMap[pid] 及 初始化 children 为空数组
 */
 
 const toTree2 = (arr) => {
@@ -94,6 +97,7 @@ const toTree2 = (arr) => {
 
 /* 
   Map方式 优化，在遍历时构建 Map
+  区别在于循环时父级还没存在的时候构建itemMap父级 children，在每次循环的时候重新组合内容和定义 children 指向
 */
 
 const toTree3 = (arr) => {
