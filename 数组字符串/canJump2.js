@@ -26,24 +26,27 @@
 /*
   问题归纳为 比较每一步的最大覆盖范围，历经最小 step 步，可到达终点
   step 在什么情况下 + 1 步 ？
-  比如 第 i 阶的 最大覆盖范围 为 i + nums[i]，记作 nextIndex
-  那么在 i 到 nextIndex 之间，我们需要考虑下一步能够到达的 最远距离，
-  并更新 nextIndex, 当 i 走到 nextIndex 时，将 startIndex 改为 nextIndex 且 step + 1，代表这一步是无法避免的
+  比如 第 i 阶的 最大覆盖范围 为 i + nums[i]，记下一个最远点 maxPosition = i + nums[i]
+  我们维护当前能够到达的最大下标位置 end，当到达边界时，更新边界并将 step + 1，代表这一步是无法避免的
+  另外 遍历 i 时不能访问到最后一个元素，不然当正好 end 在最后一个元素时，会多出一步
 */
 var jump3 = function(nums) {
-  let startIndex = 0
-  let nextIndex = 0
+  const n = nums.length
+  let maxPosition = 0
+  let end = 0
   let step = 0
-  if (nums.length === 1) return 0
-  for (let i = 0; i < nums.length; i++) {
-    if (i === nextIndex) {
-      startIndex = nextIndex
+  for (let i = 0; i < n - 1; i++) {
+    maxPosition = Math.max(nums[i] + i, maxPosition)
+    if (i === end) {
+      end = maxPosition
       step++
     }
-    nextIndex = Math.max(nums[i] + i, nextIndex)
   }
   return step
 }
+
+const nums = [1,1,1,1]
+console.log('jump3(nums)', jump3(nums))
 
 // 别人的贪心写法
 var jump = function(nums) {
@@ -79,6 +82,3 @@ var jump2 = function(nums) {
   }
   return dp[n - 1]
 }
-
-const nums = [2,3,0,1,4]
-console.log('jump3(nums)', jump3(nums))
