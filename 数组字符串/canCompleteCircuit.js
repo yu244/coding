@@ -34,7 +34,33 @@
  * @param {number[]} cost
  * @return {number}
  */
+// 以存在解且唯一为约束条件，返回内循环步数走完全程 n 返回 起点，得到唯一解
+// 过程中保证 油量 不小于 花费，如果条件不成立，更换起点
 var canCompleteCircuit = function(gas, cost) {
+  const n = gas.length
+  let i = 0
+  while (i < n) {
+    let sumOfGas = 0
+    let sumOfCost = 0
+    let cnt = 0
+    while (cnt < n) {
+      let j = (i + cnt) % n
+      sumOfGas += gas[j]
+      sumOfCost += cost[j]
+      if (sumOfGas < sumOfCost) break
+      cnt++
+    }
+    if (cnt === n) {
+      return i
+    } else {
+      i = i + cnt + 1
+    }
+  }
+  return -1
+}
+
+// 暴力超时
+var canCompleteCircuit2 = function(gas, cost) {
   const arr = []
   let leave = 0
   for (let i = 0; i < gas.length; i++) {
@@ -43,16 +69,23 @@ var canCompleteCircuit = function(gas, cost) {
       arr.push(i)
     }
   }
-  console.log('arr', arr)
-  console.log('leave', leave)
   if (leave < 0 || arr.length < 1) return -1
+  const n = gas.length
+  gas = gas.concat(gas)
+  cost = cost.concat(cost)
   let residue = 0
   for (let j = 0; j < arr.length; j++) {
-    if (residue < 0) continue
+    residue = 0
+    for (let k = arr[j]; k < j + n; k++) {
+      residue = residue + gas[k] - cost[k]
+      if (residue < 0) break
+    }
+    if (residue >= 0) return arr[j]
   }
+  return -1
 };
 
-const gas = [1, 2, 3, 4, 5]
-const  cost = [3, 4, 5, 1, 2]
+const gas = [6, 1, 4, 3, 5]
+const  cost = [3, 8, 2, 4, 2]
 
 canCompleteCircuit(gas, cost)
