@@ -25,50 +25,29 @@
  * @param {number[]} ratings
  * @return {number}
  */
-var candy2 = function(ratings) {
-  const n = ratings.length
-  const arr = new Array(n).fill(1)
-  let left = 0
-  let right = 1
-  while (left < n) {
-    if (ratings[left] > ratings[right]) {
-      if (arr[left] < 2) arr[left]++
-    } else if (ratings[left] < ratings[right]) {
-      if (arr[right] < 2) arr[right]++
-    }
-    left++
-    right++
-  }
-  console.log('arr', arr)
-  return arr.reduce((a, b) => a + b)
-};
-
-const ratings = [1,2,87,87,87,2,1]
-
+// 顺序遍历一次 倒序遍历一次
 var candy = function(ratings) {
   const n = ratings.length
-  const arr = new Array(n).fill(1)
-  let res = 0
-  let i = 0
-  while (i < n) {
-    let descNum = 0
-    while (i < n - 1 && ratings[i + 1] === ratings[i]) {
-      arr[i + 1] = 1
-      i++
+  const left = new Array(n).fill(0)
+  for (let i = 0; i < n; i++) {
+    if (i > 0 && ratings[i] > ratings[i - 1]) {
+      left[i] = left[i - 1] + 1
+    } else {
+      left[i] = 1
     }
-    while (i < n - 1 && ratings[i + 1] > ratings[i]) {
-      arr[i + 1] = arr[i] + 1
-      res += arr[i] + arr[i + 1]
-      i++
-    }
-    while (i < n - 1 && ratings[i + 1] < ratings[i]) {
-      descNum++
-      i++
-    }
-    
-    console.log('res', res)
-    i++
   }
-  return res
+  // 单个变量记录右规则
+  let right = 0, ret = 0
+  for (let j = n - 1; j >= 0; j--) {
+    if (j < n - 1 && ratings[j] > ratings[j + 1]) {
+      right++
+    } else {
+      right = 1
+    }
+    ret += Math.max(left[j], right)
+  }
+  return ret
 }
+
+const ratings = [1,2,87,87,87,2,1]
 console.log('candy(ratings)', candy(ratings))
