@@ -1,42 +1,14 @@
 /*
-  给你一个链表的头节点 head ，判断链表中是否有环。
-  如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 
-  为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。
-  注意：pos 不作为参数进行传递 。仅仅是为了标识链表的实际情况。
-
-  如果链表中存在环 ，则返回 true 。 否则，返回 false 。
+  每日一题来啦
+  给你一个二维整数数组 envelopes ，其中 envelopes[i] = [wi, hi] ，表示第 i 个信封的宽度和高度。
+  当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。
+  请计算 最多能有多少个 信封能组成一组“俄罗斯套娃”信封（即可以把一个信封放到另一个信封里面）。
+  注意：不允许旋转信封。
+  示例 1：
+  输入：envelopes = [[5,4],[6,4],[6,7],[2,3]]
+  输出：3
+  解释：最多信封的个数为 3, 组合为: [2,3] => [5,4] => [6,7]。示例 2：
+  
+  输入：envelopes = [[1,1],[1,1],[1,1]]
+  输出：1
 */
-
-/**
- * @param {ListNode} head
- * @return {boolean}
- */
-var hasCycle = function(head) {
-  let slow = head
-  let fast = head
-  let result = false
-  while (fast && fast.next) {
-    slow = slow.next
-    fast = fast.next.next
-    if (slow === fast) {
-      result = true
-      break
-    }
-  }
-  return result
-}
-
-var hasCycle = function(head) {
-  const hashMap = new Map()
-  let result = false
-  while (head && head.next) {
-    if (hashMap.get(head)) {
-      result = true
-      break
-    } else {
-      hashMap.set(head, true)
-    }
-    head = head.next
-  }
-  return result
-}
