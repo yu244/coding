@@ -39,17 +39,49 @@
  * @return {string}
  */
 var convert = function(s, numRows) {
-  let arr = new Array(numRows).fill([])
-  let temp = numRows  
-  let arrPionter = 0
+  // 相同空数组的引用
+  // let arr = new Array(numRows).fill([])
+  let arr = new Array(numRows).fill().map(() => []);
+  let getNewIndex = helper(numRows)
+  let temp = getNewIndex()
   let pointer = 0
   while (pointer < s.length) {
-    if (arrPionter < numRows) {
-      arrPionter++
-    } else {
-      arrPionter = 0
+    for (let i = 0; i < arr.length; i++) {
+      if (i === temp) {
+        arr[i].push(s[pointer])
+        pointer++
+      }
     }
+    temp = getNewIndex()
   }
+  let res = []
+  for (let j = 0; j < arr.length; j++) {
+    res = [...res, ...arr[j]]
+  }
+  return res.join('')
 };
 
-convert('PAYPALISHIRING', 3)
+var helper = function (numRows) {
+  let temp = -1
+  let asc = true
+  return function () {
+    if (asc) {
+      if (temp < numRows - 1) {
+        temp++
+      } else {
+        asc = false
+        temp--
+      }
+    } else {
+      if (temp > 0) {
+        temp--
+      } else {
+        asc = true
+        temp++
+      }
+    }
+    return temp
+  }
+}
+
+console.log('convert', convert('PAYPALISHIRING', 4))
