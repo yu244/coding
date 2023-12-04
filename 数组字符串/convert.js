@@ -45,6 +45,7 @@ var convert = function(s, numRows) {
   let getNewIndex = helper(numRows)
   let temp = getNewIndex()
   let pointer = 0
+  if (numRows === 1) return s
   while (pointer < s.length) {
     for (let i = 0; i < arr.length; i++) {
       if (i === temp) {
@@ -61,27 +62,42 @@ var convert = function(s, numRows) {
   return res.join('')
 };
 
+// var helper = function (numRows) {
+//   let temp = -1
+//   let asc = true
+//   return function () {
+//     if (asc) {
+//       if (temp < numRows - 1) {
+//         temp++
+//       } else {
+//         asc = false
+//         temp--
+//       }
+//     } else {
+//       if (temp > 0) {
+//         temp--
+//       } else {
+//         asc = true
+//         temp++
+//       }
+//     }
+//     return temp
+//   }
+// }
+
 var helper = function (numRows) {
   let temp = -1
   let asc = true
   return function () {
-    if (asc) {
-      if (temp < numRows - 1) {
-        temp++
-      } else {
-        asc = false
-        temp--
-      }
-    } else {
-      if (temp > 0) {
-        temp--
-      } else {
-        asc = true
-        temp++
-      }
+    asc ? temp++ : temp--
+    if (temp === numRows - 1) {
+      asc = false
+    }
+    if (temp === 0) {
+      asc = true
     }
     return temp
   }
 }
 
-console.log('convert', convert('PAYPALISHIRING', 4))
+console.log('convert', convert('AB', 1))
