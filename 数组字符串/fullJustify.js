@@ -55,7 +55,7 @@
  * @return {string[]}
  */
 var fullJustify = function(words, maxWidth) {
-  let res = []
+  let temp = []
   let arr = []
   let m = 0
   for (let i = 0; i < words.length; i++) {
@@ -63,18 +63,59 @@ var fullJustify = function(words, maxWidth) {
     arr.push(words[i])
     if (m - 1 > maxWidth) {
       arr.pop()
-      res.push([...arr])
+      temp.push([...arr])
       arr.length = 0
       m = words[i].length + 1
       arr.push(words[i])
     }
   }
   if (arr.length > 0) {
-    res.push([...arr])
+    temp.push([...arr])
   }
-  console.log('res', res)
+  let res = []
+  for (let j = 0; j < temp.length - 1; j++) {
+    let n = temp[j].length
+    if (n === 1) {
+      res.push(temp[j][0] + ' '.repeat(maxWidth - temp[j][0].length))
+    }
+    if (n === 2) {
+      res.push(temp[j][0] + ' '.repeat(maxWidth - temp[j][0].length - temp[j][1].length) + temp[j][1])
+    }
+    if (n > 2) {
+      let sum = 0
+      for (let k = 0; k < n; k++) {
+        sum += temp[j][k].length
+      }
+      let average = Math.floor((maxWidth - sum) / (n - 1))
+      let leave = ((maxWidth - sum) % (n - 1))
+      let tempStr = ''
+      for (let x = 0; x < n - 1; x++) {
+        if (leave > 0) {
+          tempStr += temp[j][x] + ' '.repeat(average + 1)
+          leave--
+        } else {
+          tempStr += temp[j][x] + ' '.repeat(average)
+        }
+      }
+      tempStr += temp[j][n - 1]
+      res.push(tempStr)
+    }
+  }
+  let lastStr = ''
+  for (let y = 0; y < temp[temp.length - 1].length; y++) {
+    if (y === temp[temp.length - 1].length - 1) {
+      lastStr += temp[temp.length - 1][y]
+    } else {
+      lastStr += temp[temp.length - 1][y] + ' '
+    }
+  }
+  if (maxWidth - lastStr.length > 0) {
+    lastStr += ' '.repeat(maxWidth - lastStr.length)
+  }
+  res.push(lastStr)
+  return res
 };
 
-const words = ["What","must","be","acknowledgment","shall","be"]
-const maxWidth = 16
+const words = ["sera","sera","When","I","grew","up","and","fell","in","love","I","asked","my","sweetheart"]
+const maxWidth = 60
 console.log('fullJustify()', fullJustify(words, maxWidth))
