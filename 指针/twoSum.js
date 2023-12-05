@@ -32,5 +32,33 @@
  * @return {number[]}
  */
 var twoSum = function(numbers, target) {
-
+  let n = numbers.length
+  let x = 0
+  let y = n >> 1
+  let left = 0
+  let right = n
+  while (right - left > 1) {
+    if (numbers[y] + numbers[0] > target) {
+      right = y
+      y = left + ((right - left) >> 1)
+    } else {
+      left = y
+      y = y + ((right - y) >> 1)
+    }
+  }
+  while (x < y) {
+    if (numbers[x] + numbers[y] === target) {
+      return [x + 1, y + 1]
+    }
+    if (numbers[x] + numbers[y] > target) {
+      y--
+    }
+    if (numbers[x] + numbers[y] < target) {
+      x++
+    }
+  }
 };
+
+const numbers = [2,3,7,11,15]
+const target = 9
+console.log('twoSum', twoSum(numbers, target))
