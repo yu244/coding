@@ -44,7 +44,7 @@ var findSubstring = function(s, words) {
   let res = []
   while (L < s.length - words[0].length) {
     arr = [...words]
-    current = s.slice(L, L + n + 1)
+    current = s.slice(L, L + n)
     let match = true
     pre = []
     let temp
@@ -54,7 +54,7 @@ var findSubstring = function(s, words) {
         match = false
         break
       } else {
-        pre.push(temp)
+        current = current.slice(0, temp).concat(current.slice(temp + words[0].length, current.length))
       }
     }
     if (match) {
@@ -62,12 +62,11 @@ var findSubstring = function(s, words) {
     }
     L = L + words[0].length
   }
-  console.log(res)
   return res
 };
 
-const s = 'wordgoodgoodgoodbestword'
-const words = ["word","good","best","word"]
+const s = 'lingmindraboofooowingdingbarrwingmonkeypoundcake'
+const words = ["fooo","barr","wing","ding","wing"]
 
 console.log('findSubstring(s, words)', findSubstring(s, words))
 
