@@ -34,7 +34,48 @@
  * @param {string[]} words
  * @return {number[]}
  */
+// 哈希计数、滑动窗口
 var findSubstring = function(s, words) {
+  let stantardMap = new Map()
+  let step = words[0].length
+  let n = words.length
+  let res = []
+  for (let k = 0; k < words.length; k++) {
+    if (stantardMap.has(words[k])) {
+      stantardMap.set(words[k], stantardMap.get(words[k]) + 1)
+    } else {
+      stantardMap.set(words[k], 1)
+    }
+  }
+  out:
+  for (let i = 0; i <= s.length - step * n; i++) {
+    let curMap = new Map()
+    for (let j = 0; j < n; j++) {
+      let subStr = s.substring(i + j * step, i + (j + 1) * step)
+      if (!stantardMap.has(subStr)) {
+        continue out
+      }
+      if (curMap.has(subStr)) {
+        curMap.set(subStr, curMap.get(subStr) + 1)
+        if (curMap.get(subStr) > stantardMap.get(subStr)) {
+          continue out
+        }
+      } else {
+        curMap.set(subStr, 1)
+      }
+    }
+    res.push(i)
+  }
+  return res
+}
+
+const s = "abbaccaaabcabbbccbabbccabbacabcacbbaabbbbbaaabaccaacbccabcbababbbabccabacbbcabbaacaccccbaabcabaabaaaabcaabcacabaa"
+const words = ["cac","aaa","aba","aab","abc"]
+
+console.log('findSubstring(s, words)', findSubstring(s, words))
+
+// 暴力解
+var findSubstring2 = function(s, words) {
   let n = words.length * words[0].length
   let current
   let L = 0
@@ -85,11 +126,6 @@ var findSubstring = function(s, words) {
   }
   return res
 };
-
-const s = "abbaccaaabcabbbccbabbccabbacabcacbbaabbbbbaaabaccaacbccabcbababbbabccabacbbcabbaacaccccbaabcabaabaaaabcaabcacabaa"
-const words = ["cac","aaa","aba","aab","abc"]
-
-console.log('findSubstring(s, words)', findSubstring(s, words))
 
 // 递归组成哈希表
 // const word = ["foo","bar","the"];
