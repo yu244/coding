@@ -36,20 +36,39 @@
  */
 var findSubstring = function(s, words) {
   let n = words.length * words[0].length
-  let arr = []
   let current
   let L = 0
-  let R
-  current = s.slice(L, L + n)
   let res = []
-  while (L < s.length - words[0].length) {
-    arr = [...words]
+  let addLength = words[0].length
+  if (words.every((val, index, arr) => val === arr[0])) {
+    addLength = 1
+  } else {
+    const counts = {};
+    words.forEach(item => {
+      counts[item] = (counts[item] || 0) + 1;
+    });
+    words = words.sort((a, b) => {
+      return counts[b] - counts[a];
+    });
+  }
+  while (L <= s.length - n) {
     current = s.slice(L, L + n)
     let match = true
-    pre = []
     let temp
-    for (let i = 0; i < arr.length; i++) {
-      temp = current.indexOf(arr[i])
+    let str
+    for (let i = 0; i < words.length; i++) {
+      temp = current.indexOf(words[i])
+      let x = 0
+      while (temp % words[0].length !== 0 && x < 20) {
+        str = current.slice(temp + 1, current.length)
+        if (str.indexOf(words[i]) === -1) {
+          temp = -1
+          break
+        } else {
+          temp += str.indexOf(words[i]) + 1
+        }
+        x++
+      }
       if (temp === -1) {
         match = false
         break
@@ -59,14 +78,16 @@ var findSubstring = function(s, words) {
     }
     if (match) {
       res.push(L)
+      L = L + addLength
+    } else {
+      L = L + 1
     }
-    L = L + words[0].length
   }
   return res
 };
 
-const s = 'lingmindraboofooowingdingbarrwingmonkeypoundcake'
-const words = ["fooo","barr","wing","ding","wing"]
+const s = "abbaccaaabcabbbccbabbccabbacabcacbbaabbbbbaaabaccaacbccabcbababbbabccabacbbcabbaacaccccbaabcabaabaaaabcaabcacabaa"
+const words = ["cac","aaa","aba","aab","abc"]
 
 console.log('findSubstring(s, words)', findSubstring(s, words))
 
