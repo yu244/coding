@@ -25,8 +25,45 @@
  * @param {string} t
  * @return {string}
  */
-// 单指针每次重建 map 解法，265 / 267 超时
 var minWindow = function(s, t) {
+  let tMap = new Map()
+  let needType = 0
+  for (const item of t) {
+    if (!tMap.get(item)) needType++
+    tMap.set(item, (tMap.get(item) || 0) + 1 )
+  }
+  let l = 0
+  let r = 0
+  let start = s.length
+  let minLen = s.length + 1
+  while (r < s.length) {
+    if (tMap.get(s[r]) !== undefined) {
+      tMap.set(s[r], tMap.get(s[r]) - 1)
+      if (tMap.get(s[r]) === 0) needType--
+    }
+    while (needType === 0) {
+      if (tMap.get(s[l]) !== undefined) {
+        if (r - l + 1 < minLen) {
+          minLen = r - l + 1
+          start = l
+        }
+        tMap.set(s[l], tMap.get(s[l]) + 1)
+        if (tMap.get(s[l]) > 0) needType++
+      }
+      l++
+    }
+    r++
+  }
+  if (start === s.length) return ''
+  return s.slice(start, start + minLen)
+}
+let s = "ADOBECODEBANC", t = "ABC"
+
+console.log('minWindow(s, t)', minWindow(s, t))
+
+
+// 单指针每次重建 map 解法，测试用例 265 / 267 超时
+var minWindow2 = function(s, t) {
   let tMap = new Map()
   let right = 1
   let temp = Infinity
@@ -70,7 +107,3 @@ var minWindow = function(s, t) {
   }
   return ''
 };
-
-let s = "ab", t = "a"
-
-console.log('minWindow(s, t)', minWindow(s, t))
