@@ -45,11 +45,11 @@ var rotate = function(matrix) {
 // 水平翻转 + 对角线翻转
 var rotate = function(matrix) {
   const n = matrix.length
-  for (let i = 0; i < n; i++) {
+  for (let i = 0; i < n / 2; i++) {
     [matrix[i], matrix[n - 1 - i]] = [matrix[n - 1 - i], matrix[i]]
   }
   for (let j = 0; j < n; j++) {
-    for (let k = 0; k < n; k++) {
+    for (let k = 0; k < j; k++) {
       [matrix[j][k], matrix[k][j]] = [matrix[k][j], matrix[j][k]]
     }
   }
