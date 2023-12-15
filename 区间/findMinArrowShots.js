@@ -33,5 +33,19 @@
  * @return {number}
  */
 var findMinArrowShots = function(points) {
-
+  points.sort((a, b) => a[1] - b[1])
+  let n = points.length
+  let res = 0
+  let i = 0
+  while (i < n) {
+    let right = points[i][1]
+    while (i < n && points[i][0] <= right) {
+      i++
+    }
+    res++
+  }
+  return res
 };
+
+const points = [[10,16],[2,8],[1,6],[7,12]]
+console.log('findMinArrowShots(points)', findMinArrowShots(points))
