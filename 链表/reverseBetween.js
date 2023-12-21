@@ -31,6 +31,12 @@ var reverseBetween = function(head, left, right) {
   for (let i = 0; i < left - 1; i++) {
     pre = pre.next
   }
+  /*
+    三个指针
+    cur：指向待反转区域的第一个节点
+    next: 永远指向 cur 的下一个节点，循环过程中 cur 变化以后 next 会变化
+    pre: 永远指向待反转区域的第一个节点，left的前一个节点，循环过程中不变
+  */
   let cur = pre.next
   for (let i = 0; i < right - left; i++) {
     const next = cur.next
