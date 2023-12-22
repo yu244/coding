@@ -30,6 +30,7 @@ var rotateRight = function(head, k) {
     num++
   }
   cur.next = head
+  // 不论k是否超过num 都适用
   let times = num - (k % num)
   while (times > 0) {
     cur = cur.next
