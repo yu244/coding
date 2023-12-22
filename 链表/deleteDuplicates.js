@@ -43,19 +43,38 @@ var deleteDuplicates = function(head) {
 
 var deleteDuplicates = function(head) {
   if (!head) return head
-  const dummyNode = new ListNode(0, head)
+  const dummyNode = new ListNode(-1)
+  dummyNode.next = head
   let fast = head
-  let slow = dummyNode  
+  let slow = dummyNode
   while (fast) {
-    while (fast.next && fast.next.val === fast.val) {
+    while (fast.next && fast.val === fast.next.val) {
       fast = fast.next
     }
     if (slow.next !== fast) {
+      // 暂时指向不同值，只在后面连续的时候替换slow
       slow.next = fast.next
     } else {
       slow = slow.next
     }
     fast = fast.next
   }
-  return dummyNode.next
+
+
+  // if (!head) return head
+  // const dummyNode = new ListNode(0, head)
+  // let fast = head
+  // let slow = dummyNode  
+  // while (fast) {
+  //   while (fast.next && fast.next.val === fast.val) {
+  //     fast = fast.next
+  //   }
+  //   if (slow.next !== fast) {
+  //     slow.next = fast.next
+  //   } else {
+  //     slow = slow.next
+  //   }
+  //   fast = fast.next
+  // }
+  // return dummyNode.next
 }
