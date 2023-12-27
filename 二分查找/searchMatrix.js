@@ -34,7 +34,6 @@ var searchMatrix = function(matrix, target) {
     }
   }
   let arr = matrix[ans]
-  if (!arr) return false
   left = 0, right = m - 1
   while (left <= right) {
     let mid = ((right - left) >> 1) + left
