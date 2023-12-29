@@ -39,11 +39,10 @@ var search = function(nums, target) {
     // mid 到 n - 1 是有序数组
     } else {
       // target 落点在有序数组内
-      if (nums[mid] < target && target < nums[n - 1]) break
+      if (nums[mid] < target && target <= nums[n - 1]) break
       right = mid - 1
     }
   }
-  console.log(left, right)
   while (left <= right) {
     let mid = ((right - left) >> 1) + left
     if (nums[mid] === target) {
