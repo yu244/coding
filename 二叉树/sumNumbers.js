@@ -36,6 +36,49 @@
  * @param {TreeNode} root
  * @return {number}
  */
+// 栈
 var sumNumbers = function(root) {
-
+  const stack = new Array()
+  let sum = 0
+  let num = 0
+  let cur = root
+  let pre = null
+  while (cur !== null || stack.length > 0) {
+    while (cur !== null) {
+      stack.push(cur)
+      num = (num * 10) + cur.val
+      cur = cur.left
+    }
+    cur = stack[stack.length - 1]
+    if (cur.left === null && cur.right === null) {
+      sum += num
+    }
+    if (cur.right === null || cur.right === pre) {
+      stack.pop()
+      num = (num - cur.val) / 10
+      pre = cur
+      cur = null
+    } else {
+      cur = cur.right
+    }
+  }
+  return sum
 };
+
+// 递归
+var sumNumbers = function(root) {
+  function dfs (node, prevNum) {
+    if (node === null) {
+      return 0
+    }
+    let sum = prevNum * 10 + node.val
+    if (node.left === null && node.right === null) {
+      return sum
+    } else {
+      return dfs(node.left, sum) + dfs(node.right, sum)
+    }
+  }
+
+  return dfs(root, 0)
+}
+
