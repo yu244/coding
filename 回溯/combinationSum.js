@@ -26,6 +26,7 @@
  * @param {number} target
  * @return {number[][]}
  */
+// 只管推出提奥健，每次递归分出两个分支决定选和不选当前数值
 var combinationSum = function(candidates, target) {
   const ans = new Array()
   function dfs (target, combine, idx) {
@@ -44,5 +45,23 @@ var combinationSum = function(candidates, target) {
   dfs(target, [], 0)
   return ans
 };
+
+// 传统模板
+var combinationSum = function(candidates, target) {
+  const res = new Array()
+  function dfs (idx, combine, sum) {
+    if (sum === target) {
+      res.push(combine.slice())
+    }
+    if (sum > target) return
+    for (let i = idx; i < candidates.length; i++) {
+       combine.push(candidates[i])
+       dfs(i, combine, sum + candidates[i])
+       combine.pop()
+    }
+  }
+  dfs(0, [], 0)
+  return res
+}
 
 console.log('combinationSum()', combinationSum([2,3,6,7], 7))
