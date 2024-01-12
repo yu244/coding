@@ -13,37 +13,37 @@
  * @return {string[]}
  */
 // dfs + 栈
-// var generateParenthesis = function(n) {
-//   const res = new Array()
-//   const len = n * 2
-//   function dfs (path) {
-//     if (path.length === len) {
-//       if (isTrue(path)) {
-//         res.push(path)
-//       }
-//       return
-//     }
-//     dfs(path.concat('('))
-//     dfs(path.concat(')'))
-//   }
-//   dfs('')
-//   function isTrue (str) {
-//     let res = true
-//     const stack = []
-//     for (let i = 0; i < str.length; i++) {
-//       if (i !== 0 && str[i] === ')' && stack[stack.length - 1] === '(') {
-//         stack.pop()
-//       } else {
-//         stack.push(str[i])
-//       }
-//     }
-//     if (stack.length !== 0) {
-//       return false
-//     }
-//     return res
-//   }
-//   return res
-// };
+var generateParenthesis = function(n) {
+  const res = new Array()
+  const len = n * 2
+  function dfs (path) {
+    if (path.length === len) {
+      if (isTrue(path)) {
+        res.push(path)
+      }
+      return
+    }
+    dfs(path.concat('('))
+    dfs(path.concat(')'))
+  }
+  dfs('')
+  function isTrue (str) {
+    let res = true
+    const stack = []
+    for (let i = 0; i < str.length; i++) {
+      if (i !== 0 && str[i] === ')' && stack[stack.length - 1] === '(') {
+        stack.pop()
+      } else {
+        stack.push(str[i])
+      }
+    }
+    if (stack.length !== 0) {
+      return false
+    }
+    return res
+  }
+  return res
+};
 
 // 递归剪枝的条件是左右括号数量不一致
 var generateParenthesis = function(n) {
