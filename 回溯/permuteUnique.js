@@ -50,9 +50,9 @@ var permuteUnique = function(nums) {
   const res = new Array()
   const len = nums.length
   const used = {}
-  let pre
   nums = nums.sort((a, b) => a - b)
   function dfs(path) {
+    let pre = null
     if (path.length === len) {
       res.push(path.slice())
       return
