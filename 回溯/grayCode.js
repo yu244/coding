@@ -53,7 +53,9 @@ var grayCode = function (n) {
       res.push(path)
       return
     }
+    // 对应左子树，如果 isRight 为 0， 那么左路径为 0 ，如果 isRight 是 1，那么左路径就是 1
     dfs((path << 1) | isRight, 0, depth + 1)
+    // 对应右子树，如果 isRight 为 0， 那么右路径为 1 ，如果 isRight 是 1，那么右路径就是 0
     dfs((path << 1) | isRight ^ 1, 1, depth + 1)
   }
   dfs(0, 0, 0)
