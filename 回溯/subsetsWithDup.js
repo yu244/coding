@@ -15,27 +15,27 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
-// 分叉回溯
-var subsetsWithDup = function(nums) {
-  const res = new Array()
-  const n = nums.length
-  nums = nums.sort((a, b) => a - b)
-  function dfs (idx, path) {
-    let pre
-    if (idx === n) {
-      if (pre === nums[idx]) return
-      res.push(path.slice())
-      return
-    }
-    path.push(nums[idx])
-    pre = nums[idx]
-    dfs(idx + 1, path)
-    path.pop()
-    dfs(idx + 1, path)
-  }
-  dfs(0, [])
-  return res
-};
+// 分叉回溯貌似不行
+// var subsetsWithDup = function(nums) {
+//   const res = new Array()
+//   const n = nums.length
+//   nums = nums.sort((a, b) => a - b)
+//   function dfs (idx, path) {
+//     let pre
+//     if (idx === n) {
+//       if (pre === nums[idx]) return
+//       res.push(path.slice())
+//       return
+//     }
+//     path.push(nums[idx])
+//     pre = nums[idx]
+//     dfs(idx + 1, path)
+//     path.pop()
+//     dfs(idx + 1, path)
+//   }
+//   dfs(0, [])
+//   return res
+// };
 // 全遍历
 var subsetsWithDup = function(nums) {
   const res = new Array()
