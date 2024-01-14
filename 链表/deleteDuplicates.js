@@ -78,3 +78,22 @@ var deleteDuplicates = function(head) {
   // }
   // return dummyNode.next
 }
+
+// 每日一题
+var deleteDuplicates = function(head) {
+  const dummyNode = new ListNode(null, head)
+  let pre = dummyNode
+  let cur = dummyNode.next
+  while (cur !== null) {
+    if (cur.next === null && cur.val === pre.val) {
+      pre.next = null
+      break
+    }
+    if (cur.val !== pre.val) {
+      pre.next = cur
+      pre = cur
+    }
+    cur = cur.next
+  }
+  return dummyNode.next
+}
