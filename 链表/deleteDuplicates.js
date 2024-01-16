@@ -78,3 +78,59 @@ var deleteDuplicates = function(head) {
   // }
   // return dummyNode.next
 }
+
+// 每日一题
+var deleteDuplicates = function(head) {
+  const dummyNode = new ListNode(null, head)
+  let pre = dummyNode
+  let cur = dummyNode.next
+  while (cur !== null) {
+    if (cur.next === null && cur.val === pre.val) {
+      pre.next = null
+      break
+    }
+    if (cur.val !== pre.val) {
+      pre.next = cur
+      pre = cur
+    }
+    cur = cur.next
+  }
+  return dummyNode.next
+}
+// 每日一题
+// 三指针跳过法，判断后两个是否相同，如果相同就循环到下一个值，然后重新进入循环，如果不同即可移动慢指针
+var deleteDuplicates = function(head) {
+  if (!head) return head
+  const dummyNode = new ListNode(null, head)
+  let cur = dummyNode
+  while (cur.next && cur.next.next) {
+    if (cur.next.val === cur.next.next.val) {
+      const x = cur.next.val
+      while (cur.next && cur.next.val === x) {
+        cur.next = cur.next.next
+      }
+    } else {
+      cur = cur.next
+    }
+  }
+  return dummyNode.next
+};
+// slow暂存法，通过 slow.next 是不是等于 fast 判断是否有过跳过（即 有过重复
+var deleteDuplicates = function(head) {
+  if (!head) return head
+  const dummyNode = new ListNode(null, head)
+  let slow = dummyNode
+  let fast = dummyNode.next
+  while (fast) {
+    while (fast.next && fast.val === fast.next.val) {
+      fast = fast.next
+    }
+    if (slow.next !== fast) {
+      slow.next = fast.next
+    } else {
+      slow = slow.next
+    }
+    fast = fast.next
+  }
+  return dummyNode.next
+}

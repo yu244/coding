@@ -26,7 +26,7 @@
  * @param {number} target
  * @return {number[][]}
  */
-// 只管推出提奥健，每次递归分出两个分支决定选和不选当前数值
+// 只管退出条件，每次递归分出两个分支决定选和不选当前数值
 var combinationSum = function(candidates, target) {
   const ans = new Array()
   function dfs (target, combine, idx) {
