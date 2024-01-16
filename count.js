@@ -35,7 +35,7 @@
 var count = function(num1, num2, min_sum, max_sum) {
   const MOD = 1e9 + 7
   const ASCII0 = '0'.charCodeAt(0)
-  const ans = calc(num2, min_sum, max_sum) - calc(num1, min_sum, max_sum) + MOD + isValid(num1)
+  const ans = calc(num2) - calc(num1) + MOD + isValid(num1)
   return ans % MOD
 
   // 判断单个数是否合法
@@ -56,6 +56,7 @@ var count = function(num1, num2, min_sum, max_sum) {
       // 直接记忆在 sum 位，所以 +1
       memo[i] = new Array(Math.min(9 * n, max_sum) + 1).fill(-1)    
     }
+    console.log('memo', memo)
     // 第一位一定是 limit 的
     return dfs(s, memo, 0, 0, true)
   }
@@ -84,3 +85,8 @@ var count = function(num1, num2, min_sum, max_sum) {
   }
 
 }
+const num1 = "4179205230"
+const num2 = "7748704426"
+const min_sum = 8
+const max_sum = 46
+console.log('count()', count(num1, num2, min_sum, max_sum))
