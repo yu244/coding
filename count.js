@@ -56,7 +56,6 @@ var count = function(num1, num2, min_sum, max_sum) {
       // 直接记忆在 sum 位，所以 +1
       memo[i] = new Array(Math.min(9 * n, max_sum) + 1).fill(-1)    
     }
-    console.log('memo', memo)
     // 第一位一定是 limit 的
     return dfs(s, memo, 0, 0, true)
   }
@@ -66,7 +65,7 @@ var count = function(num1, num2, min_sum, max_sum) {
     // 递归求和超过上限，停止
     if (sum > max_sum) return 0
 
-    // 递归求和到最后以为，满足条件返回 1 值
+    // 递归求和到最后一位，满足条件返回 1 值
     if (i === s.length) return sum >= min_sum ? 1 : 0
 
     // 记忆化存储
