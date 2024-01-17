@@ -35,7 +35,8 @@
 var count = function(num1, num2, min_sum, max_sum) {
   const MOD = 1e9 + 7
   const ASCII0 = '0'.charCodeAt(0)
-  const ans = calc(num2) - calc(num1) + MOD + isValid(num1)
+  const ans = calc(num2) + isValid(num1)
+  // const ans = calc(num2) - calc(num1) + MOD + isValid(num1)
   return ans % MOD
 
   // 判断单个数是否合法
@@ -69,23 +70,26 @@ var count = function(num1, num2, min_sum, max_sum) {
     if (i === s.length) return sum >= min_sum ? 1 : 0
 
     // 记忆化存储
-    if (!isLimit && memo[i][sum] !== -1) return memo[i][sum]
+    if (!isLimit && memo[i][sum] !== -1) {
+      return memo[i][sum]
+    }
     // 累加和
     let res = 0
     // 当前位上限
     const up = isLimit ? s.charCodeAt(i) - ASCII0 : 9
-    // 每句当前可填数字
+    // 枚举当前可填数字
     for (let j = 0; j <= up; j++) {
       res = (res + dfs(s, memo, i + 1, sum + j, isLimit && j === up)) % MOD    
     }
 
     if (!isLimit) memo[i][sum] = res
+    console.log('memo', memo)
     return res
   }
 
 }
-const num1 = "4179205230"
-const num2 = "7748704426"
-const min_sum = 8
-const max_sum = 46
+const num1 = "1"
+const num2 = "439"
+const min_sum = 1
+const max_sum = 100
 console.log('count()', count(num1, num2, min_sum, max_sum))
