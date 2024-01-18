@@ -65,5 +65,18 @@ var minimumRemoval = function(beans) {
   return res
 };
 
+// 转换为面积问题，总和 - 保留
+var minimumRemoval = function(beans) {
+  beans.sort((a, b) => a - b)
+  const n = beans.length
+  let sum = 0
+  let max = 0
+  for (let i = 0; i < n; i++) {
+    sum += beans[i]
+    max = Math.max((beans[i] * (n - i)), max)
+  }
+  return sum - max
+}
+
 const beans = [66,90,47,25,92,90,76,85,22,3]
 console.log('minimumRemoval(beans)', minimumRemoval(beans))
