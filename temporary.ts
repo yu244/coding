@@ -2,7 +2,7 @@
  * 时间 O(10mn)  96ms  100%
  * 空间 O(mn)    46mb  88%
  */
-function count(num1: string, num2: string, min_sum: number, max_sum: number): number {
+function Count(num1: string, num2: string, min_sum: number, max_sum: number): number {
   const MOD = 1e9 + 7;
   const ASCII0 = '0'.charCodeAt(0);
   const ans = _count(num2) - _count(num1) + isValid(num1) + MOD;    // 避免余数加减得到的负数
