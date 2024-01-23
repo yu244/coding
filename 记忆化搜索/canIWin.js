@@ -34,20 +34,25 @@
  * @param {number} desiredTotal
  * @return {boolean}
  */
+// 判断先手能赢的博弈 转化为问题 : 我选这张牌的同时,对方不能赢,即可算稳赢(前提条件有玩家游戏时都表现 最佳)
+// 用 map 记录先手哪张牌能不能赢
 var canIWin = function(maxChoosableInteger, desiredTotal) {
   // 等差数列 (首相 + 尾相) * 相数 / 2
   if ((1 + maxChoosableInteger) * maxChoosableInteger / 2 < desiredTotal) return false
   const memo = new Map()
-  function dfs(userNum, total) {
+  function dfs (userNum, total) {
     if (!memo.has(userNum)) {
       let res = false
-      for (let i = 0; i <= maxChoosableInteger; i++) {
+      for (let i = 0; i < maxChoosableInteger; i++) {
+        // 状态压缩 判断第 i 位有没有使用过
         if (((userNum >> i) & 1) === 0) {
+          // 先手当前数是否满足
           if (i + 1 + total >= desiredTotal) {
             res = true
             break
           }
-          if (!dfs(userNum | (1 << i), total + i + 1)) {
+          // 占用当前数字,后手继续暴力,如果返回false,就是后手不能满足,即以当前数字为先手的所有情况都能稳赢
+          if (!dfs(userNum | (1 << i), i + 1 + total)) {
             res = true
             break
           }
@@ -58,7 +63,7 @@ var canIWin = function(maxChoosableInteger, desiredTotal) {
     return memo.get(userNum)
   }
   return dfs(0, 0)
-};
+}
 
 const maxChoosableInteger = 10, desiredTotal = 11
 console.log('canIWin(maxChoosableInteger, desiredTotal)', canIWin(maxChoosableInteger, desiredTotal))
