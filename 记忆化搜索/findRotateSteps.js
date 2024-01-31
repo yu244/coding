@@ -57,13 +57,57 @@
         记作 kl
   两种情况取最小值 得到:
 
-  dfs(j, i) = min((dfs(j + 1, r) + kr), dfs(j + 1, l) + kl )
+  dfs(j, i) = min((dfs(j + 1, r) + kr + 1), dfs(j + 1, l) + kl + 1)
   递归边界：dfs(j === t.length, i) = 0
   递归入口: dfs(0, 0)
-
+  超时加记忆化
 */ 
 var findRotateSteps = function(ring, key) {
-
+  const n = ring.length
+  const t = key.length
+  const memo = Array.from({length: t}, () => new Array(n).fill(-1))
+  function dfs (j, i) {
+    if (j === t) return 0
+    if (memo[j][i] !== -1) return memo[j][i]
+    let kr = null
+    let r
+    for (let x = i; x < n; x++) {
+      if (ring[x] === key[j]) {
+        kr = x - i
+        r = x
+        break
+      }
+    }
+    if (kr === null) {
+      for (let x = 0; x < i; x++) {
+        if (ring[x] === key[j]) {
+          kr = n - (i - x)
+          r = x
+          break
+        }        
+      }
+    }
+    let kl = null
+    let l
+    for (let x = i; x >= 0; x--) {
+      if (ring[x] === key[j]) {
+        kl = i - x
+        l = x
+        break
+      } 
+    }
+    if (kl === null) {
+      for (let x = n - 1; x > i; x--) {
+        if (ring[x] === key[j]) {
+          kl = n - (x - i)
+          l = x
+          break
+        } 
+      }
+    }
+    return memo[j][i] = Math.min((dfs(j + 1, r) + kr + 1), (dfs(j + 1, l) + kl + 1))
+  }
+  return dfs(0, 0)
 };
-const ring = "godding", key = "godding"
+const ring = "godding", key = "gd"
 console.log('findRotateSteps(ring, key)', findRotateSteps(ring, key))
