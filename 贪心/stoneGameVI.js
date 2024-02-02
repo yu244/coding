@@ -41,6 +41,35 @@
  * @param {number[]} bobValues
  * @return {number}
  */
+/*
+  假设 alice 选择 i 石子，bob 选择 j 石子，则 A - B = a[i] - b[j]
+  如果 alice 选择 j 石子，bob 选择 i 石子，则 A - B = a[j] - b[i]
+  如果 alice 选择 i 更优，则有 a[i] - b[j] > a[j] - b[i]
+  即 a[i] + b[i] > a[j] + b[j]
+  对 a[i] + b[i] 数组进行排序，轮流拿最大的，最终计算得分
+*/
 var stoneGameVI = function(aliceValues, bobValues) {
-  
+  const arr = []
+  for (let i = 0; i < aliceValues.length; i++) {
+    arr[i] =  {
+      value: aliceValues[i] + bobValues[i],
+      index: i
+    }
+  }
+  arr.sort((a, b) => b.value - a.value)
+  let alice = 0
+  let bob = 0
+  for (let i = 0; i < arr.length; i++) {
+    if ((i & 1) === 0) {
+      alice += aliceValues[arr[i].index]
+    } else {
+      bob += bobValues[arr[i].index]
+    }
+  }
+  if (alice > bob) return 1
+  if (alice < bob) return -1
+  if (alice === bob) return 0
 };
+
+const aliceValues = [2,4,3], bobValues = [1,6,7]
+console.log('stoneGameVI', stoneGameVI(aliceValues, bobValues))
