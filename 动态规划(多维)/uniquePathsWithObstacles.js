@@ -39,7 +39,7 @@ var uniquePathsWithObstacles = function(obstacleGrid) {
   }
   return dp[0][0]
 };
-// 状态压缩，空间复杂度 O(m)
+// 状态压缩滚动数组，空间复杂度 O(m)
 var uniquePathsWithObstacles = function(obstacleGrid) {
   if (obstacleGrid[0][0] === 1) return 0
   const n = obstacleGrid.length
