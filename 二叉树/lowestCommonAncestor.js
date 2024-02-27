@@ -30,6 +30,7 @@
  * @param {TreeNode} q
  * @return {TreeNode}
  */
+// 注意 p 和 q 是节点引用而不是值
 var lowestCommonAncestor = (root, p, q) => {
   if (root == null) { // 遇到null，返回null 没有LCA
       return null;
