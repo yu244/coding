@@ -27,6 +27,49 @@
 */
 
 // Do not return anything, modify nums1 in-place instead.
+// 双指针、创建数组，最后遍历修改nums1
+// 双指针边界条件：各自满足小于需要遍历的数都能继续while，如果其中一个已经到头 那就只处理另一个
+var merge = function(nums1, m, nums2, n) {
+  let i = 0
+  let j = 0
+  const arr = new Array()
+  let cur
+  while (i < m || j < n) {
+    if (i === m) {
+      cur = nums2[j++]
+    } else if (j === n) {
+      cur = nums1[i++]
+    } else if (nums1[i] < nums2[j]) {
+      cur = nums1[i++]
+    } else {
+      cur = nums2[j++]
+    }
+    arr.push(cur)
+  }
+  for (let i = 0; i < arr.length; i++) {
+    nums1[i] = arr[i]    
+  }
+}
+
+// 逆向双指针,注意-1的判断
+var merge = function(nums1, m, nums2, n) {
+  let i = m - 1
+  let j = n - 1
+  let tail = m + n - 1
+  let cur
+  while (i >= 0 || j >= 0) {
+    if (i === -1) {
+      cur = nums2[j--]
+    } else if (j === -1) {
+      cur = nums1[i--]
+    } else if (nums1[i] > nums2[j]) {
+      cur = nums1[i--]
+    } else {
+      cur = nums2[j--]
+    }
+    nums1[tail--] = cur
+  }
+}
 var merge = function(nums1, m, nums2, n) {
   let i = 0
   let j = 0
