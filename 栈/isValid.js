@@ -22,6 +22,30 @@
  * @param {string} s
  * @return {boolean}
  */
+// 第二次做
+var isValid = function(s) {
+  const map = {
+    ')':'(',
+    ']':'[',
+    '}':'{'
+  }
+  const queue = new Array()
+  for (let i = 0; i < s.length; i++) {
+    if (queue.length === 0) {
+      queue.push(s[i])
+      continue
+    }
+    const cur = queue[queue.length - 1]
+    if (map[s[i]] === cur) {
+      queue.pop()
+    } else {
+      queue.push(s[i])
+    }
+  }
+  if (queue.length > 0) return false
+  return true
+}
+// 第一次做
 var isValid = function(s) {
   const sMap = new Map([
     [')', '('],
