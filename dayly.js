@@ -1,41 +1,61 @@
-const nums = [1,2,3]
-var permute = function(nums) {
+// 回溯不让过
+var threeSum = function(nums) {
+  nums.sort()
+  const n = nums.length
   const res = new Array()
   const used = {}
-  function dfs (path) {
-    if (path.length === nums.length) {
-      res.push(path.slice())
-      return 
+  const set = new Set()
+  function dfs(path, sum, index) {
+    if (path.length === 3) {
+      if (sum === 0) {
+        const str = path.sort().join('')
+        if (!set.has(str)) {
+          set.add(str)
+          res.push(path.slice())
+        }
+      }
+      return
     }
-    for (let i = 0; i < nums.length; i++) {
-      if (used[nums[i]]) continue
-      used[nums[i]] = true
+    for (let i = index; i < n; i++) {
+      if (used[i]) continue
       path.push(nums[i])
-      dfs(path)
+      sum += nums[i]
+      used[i] = true
+      dfs(path, sum, i + 1)
       path.pop()
-      used[nums[i]] = false
+      sum -= nums[i]
+      used[i] = false
     }
   }
-  dfs([])
+  dfs([], 0, 0)
+  return res
+};
+// 双指针
+function threeSum (nums) {
+  nums.sort((a, b) => a - b)
+  const n = nums.length
+  const res = new Array()
+  let L
+  let R
+  for (let i = 0; i < n; i++) {
+    if (nums[i] > 0) break
+    L = i + 1
+    R = n - 1
+    if (nums[i] === nums[i - 1]) continue
+    while (L < R && nums[R] >= 0) {
+      let temp = nums[i] + nums[L] + nums[R]
+      if (temp === 0) {
+        res.push([nums[i], nums[L], nums[R]])
+        while (L < R && nums[L] === nums[L + 1]) L++
+        while (L < R && nums[R] === nums[R - 1]) R--
+        L++
+        R--
+      }
+      else if (temp > 0) R--
+      else if (temp < 0) L++
+    }    
+  }
   return res
 }
-// console.log('permute(nums)', permute(nums))
-
-
-/**
- * @param {number[]} nums
- * @return {number}
- */
-const nums2 = [-2,1,-3,4,-1,2,1,-5,4]
-var maxSubArray = function(nums) {
-  let max = -Infinity
-  for (let i = 0; i < nums.length; i++) {
-    let sum = 0
-    for (let j = i; j < nums.length; j++) {
-      sum += nums[j]
-      max = Math.max(max, sum)
-    }
-  }
-  return max
-};
-console.log('maxSubArray(nums2)', maxSubArray(nums2))
+const nums = [-1,0,1,2,-1,-4]
+console.log('threeSum(nums)', threeSum(nums))

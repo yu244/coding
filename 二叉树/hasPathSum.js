@@ -69,3 +69,13 @@ var hasPathSum = function(root, targetSum) {
   }
   return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val)
 }
+
+// 第二次做
+var hasPathSum = function(root, targetSum) {
+  if (root === null) return false
+  if(root.left === null && root.right === null) {
+    if (targetSum === root.val) return true
+    return false
+  }
+  return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val)
+}
